@@ -61,11 +61,11 @@
 
                     <div class="row">
                         <div class="col-md-2">
-                            <label>State</label>
+                            <label>County</label>
                         </div>
                         <div class="col-md-9">
                             <div class="input-space">
-                                <select formControlName="state">
+                                <select formControlName="county">
                                     <option>TO DO</option>
                                 </select>
                             </div>
@@ -136,11 +136,11 @@
 
                     <div class="row">
                         <div class="col-md-2">
-                            <label>State</label>
+                            <label>County</label>
                         </div>
                         <div class="col-md-9">
                             <div class="input-space">
-                                <select formControlName="state">
+                                <select formControlName="county">
                                     <option>TO DO</option>
                                 </select>
                             </div>
@@ -254,7 +254,7 @@
                         </div>
                         <div class="col-md-9">
                             <div class="input-space">
-                                <select formControlName="expirationYear">
+                                <select formControlName="expirationYear" (change)="handleMonthsAndYears()">
                                     <option *ngFor="let year of creditCardYears">
                                         {{ year }}
                                     </option>

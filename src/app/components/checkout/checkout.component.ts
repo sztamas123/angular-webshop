@@ -28,13 +28,13 @@ export class CheckoutComponent implements OnInit {
       shippingAddress: this.formBuilder.group({
         street: [''],
         city: [''],
-        state: [''],
+        county: [''],
         country: [''],
         zipCode: ['']
       }),
       billingAddress: this.formBuilder.group({
         street: [''],
-        city: [''],
+        county: [''],
         state: [''],
         country: [''],
         zipCode: ['']
@@ -75,6 +75,25 @@ export class CheckoutComponent implements OnInit {
     }
     else {
       this.checkoutFormGroup.controls['billingAddress'].reset();
+    }
+  }
+
+  handleMonthsAndYears() {
+    const creditCardFormGroup = this.checkoutFormGroup.get('creditCard');
+    const currentYear: number = new Date().getFullYear();
+    const selectedYear: number = Number(creditCardFormGroup?.value.expirationYear);
+
+    let startMonth: number;
+    if(currentYear === selectedYear) {
+      startMonth = new Date().getMonth() + 1;
+    }
+    else {
+      startMonth = 1;
+      this.cartFormService.getCreditCardMonths(startMonth).subscribe(
+        data => {
+          this.creditCardMonths = data;
+        }
+      );
     }
   }
 
