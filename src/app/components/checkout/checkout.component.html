@@ -52,8 +52,10 @@
                         </div>
                         <div class="col-md-9">
                             <div class="input-space">
-                                <select formControlName="country">
-                                    <option>TO DO</option>
+                                <select formControlName="country" (change)="getStates('shippingAddress')">
+                                    <option *ngFor="let country of countries" [ngValue]="country">
+                                        {{ country.name }}
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -66,7 +68,9 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <select formControlName="county">
-                                    <option>TO DO</option>
+                                    <option *ngFor="let county of shippingAddressCounties" [ngValue]="county">
+                                        {{ county.name }}
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -127,8 +131,10 @@
                         </div>
                         <div class="col-md-9">
                             <div class="input-space">
-                                <select formControlName="country">
-                                    <option>TO DO</option>
+                                <select formControlName="country" (change)="getStates('billingAddress')">
+                                    <option *ngFor="let country of countries" [ngValue]="country">
+                                        {{  country.name }}
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -141,7 +147,9 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <select formControlName="county">
-                                    <option>TO DO</option>
+                                    <option *ngFor="let county of billingAddressCounties" [ngValue]="county">
+                                        {{ county.name }}
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -177,7 +185,7 @@
                             <div class="input-space">
                                 <input formControlName="zipCode" type="text">
                             </div>
-                        </div><
+                        </div>
                     </div>
 
                 </div>

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormGroupName } from '@angular/forms';
+import { Country } from 'src/app/common/country';
+import { County } from 'src/app/common/county';
 import { CartFormService } from 'src/app/services/cart-form.service';
 
 @Component({
@@ -14,6 +16,9 @@ export class CheckoutComponent implements OnInit {
   totalQuantity: number = 0;
   creditCardYears: number[] =[];
   creditCardMonths: number[] = []
+  countries: Country[] = [];
+  shippingAddressCounties: County[] = [];
+  billingAddressCounties: County[] = [];
 
   constructor(private formBuilder: FormBuilder,
               private cartFormService: CartFormService) { }
@@ -62,6 +67,12 @@ export class CheckoutComponent implements OnInit {
       }
     );
 
+    this.cartFormService.getCountries().subscribe(
+      data => {
+        this.countries = data;
+      }
+    );
+
   }
 
   onSubmit() {
@@ -71,10 +82,13 @@ export class CheckoutComponent implements OnInit {
   copyShippingToBilling(event) {
     if(event.target.checked) {
       this.checkoutFormGroup.controls['billingAddress']
-              .setValue(this.checkoutFormGroup.controls['shippingAddress'].value)
+        .setValue(this.checkoutFormGroup.controls['shippingAddress'].value);
+
+      this.billingAddressCounties = this.shippingAddressCounties;
     }
     else {
       this.checkoutFormGroup.controls['billingAddress'].reset();
+      this.billingAddressCounties = [];
     }
   }
 
@@ -95,6 +109,24 @@ export class CheckoutComponent implements OnInit {
         }
       );
     }
+  }
+
+  getStates(FormGroupName: string) {
+    const formGroup = this.checkoutFormGroup.get(FormGroupName);
+    const countryCode = formGroup?.value.country.code;
+
+    this.cartFormService.getCounties(countryCode).subscribe(
+      data => {
+        if(FormGroupName === 'shippingAddress'){
+          this.shippingAddressCounties = data
+        }
+        else {
+          this.billingAddressCounties = data;
+        }
+
+        formGroup?.get('county')?.setValue(data[0]);
+      }
+    );
   }
 
 }
