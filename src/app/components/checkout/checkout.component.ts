@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, FormGroupName, Validators } from '
 import { Country } from 'src/app/common/country';
 import { County } from 'src/app/common/county';
 import { CartFormService } from 'src/app/services/cart-form.service';
+import { CartService } from 'src/app/services/cart.service';
 import { WebshopValidators } from 'src/app/validators/webshop-validators';
 
 @Component({
@@ -22,7 +23,8 @@ export class CheckoutComponent implements OnInit {
   billingAddressCounties: County[] = [];
 
   constructor(private formBuilder: FormBuilder,
-              private cartFormService: CartFormService) { }
+              private cartFormService: CartFormService,
+              private cartService: CartService) { }
 
   ngOnInit(): void {
     this.checkoutFormGroup = this.formBuilder.group({
@@ -83,6 +85,8 @@ export class CheckoutComponent implements OnInit {
         this.countries = data;
       }
     );
+
+    this.reviewCartDetails();
 
   }
 
@@ -197,6 +201,15 @@ export class CheckoutComponent implements OnInit {
   }
   get cardSecurityCode() {
     return this.checkoutFormGroup.get('creditCard.securityCode');
+  }
+
+  reviewCartDetails() {
+    this.cartService.totalQuantity.subscribe(
+      totalQuantity => this.totalQuantity = totalQuantity
+    );
+    this.cartService.totalPrice.subscribe(
+      totalPrice => this.totalPrice = totalPrice
+    )
   }
 
 }

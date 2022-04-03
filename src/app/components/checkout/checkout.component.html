@@ -432,7 +432,7 @@
                     <h3>Review your Order</h3>
                     <p>Total Quantity: {{ totalQuantity }}</p>
                     <p>Shipping: FREE</p>
-                    <p>Total Price: {{ totalPrice }}</p>
+                    <p>Total Price: {{ totalPrice | currency: 'EUR' }}</p>
                 </div>
 
                 <div class="text-center">
