@@ -16,17 +16,17 @@ export class CartService {
     let data = JSON.parse(this.storage.getItem('cartItems'));
     if(data != null) {
       this.cartItems = data;
-      this.computeTotals();
+      this.calculateTotals();
     }
   }
 
-  addToCart(theCartItem: CartItem) {
+  addItemToCart(cartItem: CartItem) {
     let alreadyInCart: boolean = false;
     let existingItem: CartItem = undefined!;
 
     if(this.cartItems.length > 0) {
       for(let tempCartItem of this.cartItems) {
-        if(tempCartItem.id === theCartItem.id) {
+        if(tempCartItem.id === cartItem.id) {
           existingItem = tempCartItem;
           break;
         }
@@ -37,13 +37,13 @@ export class CartService {
       existingItem.quantity++;
     }
     else {
-      this.cartItems.push(theCartItem);
+      this.cartItems.push(cartItem);
     }
-    this.computeTotals();
+    this.calculateTotals();
   }
 
 
-  computeTotals() {
+  calculateTotals() {
     let totalPriceValue: number = 0;
     let totalQuantityValue: number = 0;
 
@@ -57,21 +57,21 @@ export class CartService {
     this.persistCartItems();
   }
 
-  decrementQuantity(theCartItem: CartItem) {
-    theCartItem.quantity--;
-    if(theCartItem.quantity === 0) {
-      this.remove(theCartItem);
+  decrementQuantity(cartItem: CartItem) {
+    cartItem.quantity--;
+    if(cartItem.quantity === 0) {
+      this.removeItemFromCart(cartItem);
     }
     else {
-      this.computeTotals();
+      this.calculateTotals();
     }
   }
   
-  remove(theCartItem: CartItem) {
-    const index = this.cartItems.findIndex(tempCartItem => tempCartItem.id === theCartItem.id);
+  removeItemFromCart(cartItem: CartItem) {
+    const index = this.cartItems.findIndex(tempCartItem => tempCartItem.id === cartItem.id);
     if(index > -1) {
       this.cartItems.splice(index, 1);
-      this.computeTotals();
+      this.calculateTotals();
     }
   }
 

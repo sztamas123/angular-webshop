@@ -13,7 +13,7 @@
                             </a> 
                         </div>                    
                         <div class="price">{{ tempProduct.unitPrice | currency:'EUR'}}</div>
-                        <button (click)="addToCart(tempProduct)" class="btn btn-primary btn-sm">Add to cart</button>
+                        <button (click)="addItemToCart(tempProduct)" class="btn btn-primary btn-sm">Add to cart</button>
                     </div>
                 </div>
                 <div *ngIf="products?.length == 0" class="alert alert-warning col-md-12" role="alert">
@@ -28,9 +28,9 @@
                     <div class="col-md-6">
                         <div class="row">
                             <div class="col-md-9" style="padding-left: 30%;">
-                                <ngb-pagination [(page)]="thePageNumber"
-                                                [pageSize]="thePageSize"
-                                                [collectionSize]="theTotalElements"
+                                <ngb-pagination [(page)]="pageNumber"
+                                                [pageSize]="pageSize"
+                                                [collectionSize]="totalElements"
                                                 [maxSize]="5"
                                                 [boundaryLinks]="true"
                                                 (pageChange)="listProducts()">

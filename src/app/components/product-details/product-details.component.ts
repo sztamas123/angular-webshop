@@ -25,19 +25,18 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   handleProductDetails() {
-    //get id from link
-    const theProductId: number = +this.route.snapshot.paramMap.get('id')!;
+    const productId: number = +this.route.snapshot.paramMap.get('id')!;
     
-    this.productService.getProduct(theProductId).subscribe(
+    this.productService.getProduct(productId).subscribe(
       data => {
         this.product = data;
       }
     )
   }
 
-  addToCart() {
-    const theCartItem = new CartItem(this.product);
-    this.cartService.addToCart(theCartItem);
+  addItemToCart() {
+    const cartItem = new CartItem(this.product);
+    this.cartService.addItemToCart(cartItem);
   }
 
 }

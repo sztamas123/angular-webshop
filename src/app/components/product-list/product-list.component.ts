@@ -16,9 +16,9 @@ export class ProductListComponent implements OnInit {
   currentCategoryId: number = 1;
   previousCategoryId: number = 1;
   searchMode: boolean = false;
-  thePageNumber: number = 1;
-  thePageSize: number = 10;
-  theTotalElements: number = 0;
+  pageNumber: number = 1;
+  pageSize: number = 10;
+  totalElements: number = 0;
   previousKeyword: string = 'null';
 
   constructor(private productService: ProductService, 
@@ -52,52 +52,52 @@ export class ProductListComponent implements OnInit {
     }
 
     if(this.previousCategoryId != this.currentCategoryId) {
-      this.thePageNumber = 1;
+      this.pageNumber = 1;
     }
 
     this.previousCategoryId = this.currentCategoryId;
 
-    this.productService.getProductListPaginated(this.thePageNumber - 1,
-                                                this.thePageSize,
+    this.productService.getProductListPaginated(this.pageNumber - 1,
+                                                this.pageSize,
                                                 this.currentCategoryId)
                                                 .subscribe(this.processResult());
   }
 
   handleSearchProducts() {
-    const theKeyword: string = this.route.snapshot.paramMap.get('keyword')!;
+    const keyword: string = this.route.snapshot.paramMap.get('keyword')!;
 
-    if(this.previousKeyword != theKeyword) {
-      this.thePageNumber = 1;
+    if(this.previousKeyword != keyword) {
+      this.pageNumber = 1;
     }
 
-    this.previousKeyword = theKeyword;
+    this.previousKeyword = keyword;
 
-    this.productService.searchProductsPaginated(this.thePageNumber - 1,
-                                                this.thePageSize,
-                                                theKeyword)
+    this.productService.searchProductsPaginated(this.pageNumber - 1,
+                                                this.pageSize,
+                                                keyword)
                                                 .subscribe(this.processResult());
   }
 
   processResult() {
     return data => {
       this.products = data._embedded.products;
-      this.thePageNumber = data.page.number + 1;
-      this.thePageSize = data.page.size;
-      this.theTotalElements = data.page.totalElements;
+      this.pageNumber = data.page.number + 1;
+      this.pageSize = data.page.size;
+      this.totalElements = data.page.totalElements;
     }
   }
 
   updatePageSize(pageSize: number) {
-    this.thePageSize = pageSize;
-    this.thePageNumber = 1;
+    this.pageSize = pageSize;
+    this.pageNumber = 1;
     this.listProducts();
   }
 
-  addToCart(theProduct: Product) {
-    console.log(`Addig to cart: ${theProduct.name}, ${theProduct.unitPrice}`);
-    const theCartItem = new CartItem(theProduct);
+  addItemToCart(product: Product) {
+    console.log(`Addig to cart: ${product.name}, ${product.unitPrice}`);
+    const cartItem = new CartItem(product);
 
-    this.cartService.addToCart(theCartItem);
+    this.cartService.addItemToCart(cartItem);
   }
 
 }

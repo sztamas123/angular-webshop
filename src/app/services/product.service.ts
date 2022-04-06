@@ -15,28 +15,28 @@ export class ProductService {
 
   constructor(private httpClient: HttpClient) { }
 
-  searchProductsPaginated(thePage: number,
-                          thePageSize: number,
-                          theKeyword: string): Observable<GetResponseProducts> {
+  searchProductsPaginated(page: number,
+                          pageSize: number,
+                          keyword: string): Observable<GetResponseProducts> {
 
-    const searchUrl = `${this.baseUrl}/search/findByNameContaining?name=${theKeyword}`
-                      +`&page=${thePage}&size=${thePageSize}`;
+    const searchUrl = `${this.baseUrl}/search/findByNameContaining?name=${keyword}`
+                      +`&page=${page}&size=${pageSize}`;
 
     return this.httpClient.get<GetResponseProducts>(searchUrl);
 }
 
-  getProductListPaginated(thePage: number,
-                          thePageSize: number,
-                          theCategoryId: number): Observable<GetResponseProducts> {
+  getProductListPaginated(page: number,
+                          pageSize: number,
+                          categoryId: number): Observable<GetResponseProducts> {
 
-    const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${theCategoryId}`
-                      +`&page=${thePage}&size=${thePageSize}`;
+    const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${categoryId}`
+                      +`&page=${page}&size=${pageSize}`;
 
     return this.httpClient.get<GetResponseProducts>(searchUrl);
   }
 
-  getProductList(theCategoryId: number): Observable<Product[]> {
-    const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${theCategoryId}`;
+  getProductList(categoryId: number): Observable<Product[]> {
+    const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${categoryId}`;
 
     return this.getProducts(searchUrl);
   }
@@ -47,8 +47,8 @@ export class ProductService {
     );
   }
 
-  searchProducts(theKeyword: string): Observable<Product[]> {
-    const searchUrl = `${this.baseUrl}/search/findByNameContaining?name=${theKeyword}`;
+  searchProducts(keyword: string): Observable<Product[]> {
+    const searchUrl = `${this.baseUrl}/search/findByNameContaining?name=${keyword}`;
 
     return this.getProducts(searchUrl);
   }
@@ -60,8 +60,8 @@ export class ProductService {
     );
   }
 
-  getProduct(theProductId: number): Observable<Product> {
-    const productUrl = `${this.baseUrl}/${theProductId}`;
+  getProduct(productId: number): Observable<Product> {
+    const productUrl = `${this.baseUrl}/${productId}`;
 
     return this.httpClient.get<Product>(productUrl);
   }

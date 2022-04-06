@@ -20,8 +20,8 @@ export class CartFormService {
     )
   }
 
-  getCounties(theCountryCode: string): Observable<County[]> {
-    const searchCountiesUrl = `${this.countiesUrl}/search/findByCountryCode?code=${theCountryCode}`;
+  getCounties(countryCode: string): Observable<County[]> {
+    const searchCountiesUrl = `${this.countiesUrl}/search/findByCountryCode?code=${countryCode}`;
 
     return this.httpClient.get<GetResponseCounties>(searchCountiesUrl).pipe(
       map(response => response._embedded.counties)
@@ -32,8 +32,8 @@ export class CartFormService {
   getCreditCardMonths(startMonth: number): Observable<number[]> {
     let data: number[] = [];
 
-    for(let theMonth = startMonth; theMonth <= 12; theMonth++) {
-      data.push(theMonth);
+    for(let month = startMonth; month <= 12; month++) {
+      data.push(month);
     }
     return of(data);
   }
@@ -44,8 +44,8 @@ export class CartFormService {
     const startYear: number = new Date().getFullYear();
     const endYear: number = startYear + 15;
 
-    for(let theYear = startYear; theYear <= endYear; theYear++) {
-      data.push(theYear);
+    for(let year = startYear; year <= endYear; year++) {
+      data.push(year);
     }
     return of(data);
   }
