@@ -1,6 +1,6 @@
 <div class="form-header">
     <div *ngIf="isAuthenticated && userName" class="login-status-user-info">
-        Welcome {{ userName }}
+        Welcome {{ userName }}!
     </div>
 
     <button *ngIf="!isAuthenticated" routerLink="/login" class="au-btn-submit">Login</button>
