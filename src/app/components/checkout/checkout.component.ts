@@ -26,6 +26,7 @@ export class CheckoutComponent implements OnInit {
   countries: Country[] = [];
   shippingAddressCounties: County[] = [];
   billingAddressCounties: County[] = [];
+  storage: Storage = sessionStorage;
 
   constructor(private formBuilder: FormBuilder,
               private cartFormService: CartFormService,
@@ -34,13 +35,18 @@ export class CheckoutComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
+    // Auto populate customer's email address from browser storage
+    const email = JSON.parse(this.storage.getItem('userEmail'));
+    const firstName = JSON.parse(this.storage.getItem('firstName'));
+    const lastName = JSON.parse(this.storage.getItem('lastName'));
+
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
-        firstName: new FormControl('', [Validators.required, Validators.minLength(2),
+        firstName: new FormControl(firstName, [Validators.required, Validators.minLength(2),
                                   WebshopValidators.whitespaceValidator]),
-        lastName: new FormControl('', [Validators.required, Validators.minLength(2),
+        lastName: new FormControl(lastName, [Validators.required, Validators.minLength(2),
                                   WebshopValidators.whitespaceValidator]),
-        email: new FormControl('', [Validators.required, 
+        email: new FormControl(email, [Validators.required, 
                               Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')])
       }),
       shippingAddress: this.formBuilder.group({

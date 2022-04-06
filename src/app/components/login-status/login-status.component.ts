@@ -11,6 +11,7 @@ import { OKTA_AUTH } from '@okta/okta-angular';
 export class LoginStatusComponent implements OnInit {
   isAuthenticated: boolean = false;
   userName: string;
+  storage: Storage = sessionStorage;
 
   constructor(private oktaAuthService: OktaAuthStateService,
               @Inject(OKTA_AUTH) private oktaAuth: OktaAuth) { }
@@ -29,6 +30,13 @@ export class LoginStatusComponent implements OnInit {
       this.oktaAuth.getUser().then(
         (result) => {
           this.userName = result.name;
+          // get user email from authentication response and store it in browser storage
+          const email = result.email;
+          const lastName = result.family_name;
+          const firstName = result.given_name;
+          this.storage.setItem("userEmail", JSON.stringify(email));
+          this.storage.setItem("lastName", JSON.stringify(lastName));
+          this.storage.setItem("firstName", JSON.stringify(firstName));
         }
       );
     }

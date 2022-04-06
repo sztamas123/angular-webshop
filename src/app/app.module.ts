@@ -20,8 +20,10 @@ import { OktaAuth } from '@okta/okta-auth-js';
 import {
   OKTA_CONFIG,
   OktaAuthModule,
-  OktaCallbackComponent
-} from '@okta/okta-angular'
+  OktaCallbackComponent,
+  OktaAuthGuard
+} from '@okta/okta-angular';
+import { OrderHistoryComponent } from './components/order-history/order-history.component'
 
 const oktaConfig = Object.assign({
   onAuthRequired: (injector) => {
@@ -33,6 +35,7 @@ const oktaConfig = Object.assign({
 const oktaAuth = new OktaAuth(oktaConfig);
 
 const routes: Routes = [
+  {path: 'order-history', component: OrderHistoryComponent, canActivate: [OktaAuthGuard]},
   {path: 'login/callback', component: OktaCallbackComponent},
   {path: 'login', component: LoginComponent},
   {path: 'checkout', component: CheckoutComponent},
@@ -57,7 +60,8 @@ const routes: Routes = [
     CartDetailsComponent,
     CheckoutComponent,
     LoginComponent,
-    LoginStatusComponent
+    LoginStatusComponent,
+    OrderHistoryComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
