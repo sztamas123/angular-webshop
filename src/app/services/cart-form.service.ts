@@ -4,13 +4,14 @@ import { Observable, of } from 'rxjs';
 import { Country } from '../common/country';
 import { County } from '../common/county';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartFormService {
-  private countriesUrl = 'http://localhost:8080/api/countries';
-  private countiesUrl = 'http://localhost:8080/api/counties';
+  private countriesUrl = environment.webshopApiUrl + '/countries';
+  private countiesUrl = environment.webshopApiUrl + '/counties';
 
   constructor(private httpClient: HttpClient) { }
 
