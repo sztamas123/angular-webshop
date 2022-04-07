@@ -313,118 +313,11 @@
                 <!--Credit card-->
                 <div formGroupName="creditCard" class="form-area">
                     <h3>Credit Card</h3>
+                    <div id="card-element">
 
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label>Card Type</label>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <select formControlName="cardType">
-                                    <option>Visa</option>
-                                    <option>Mastercard</option>
-                                </select>
-                                <div *ngIf="cardType?.invalid && (cardType?.dirty || cardType?.touched)"
-                                    class="alert alert-danger mt-1">
-                                    <div *ngIf="cardType.errors['required']">
-                                        Credit card type is required
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label>Name on Card</label>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <input formControlName="name" type="text">
-                                <div *ngIf="cardName?.invalid && (cardName?.dirty || cardName?.touched)"
-                                    class="alert alert-danger mt-1">
-                                    <div
-                                        *ngIf="cardName.errors['required'] || cardName.errors['whitespaceValidator']">
-                                        Name is required
-                                    </div>
-                                    <div *ngIf="cardName.errors['minlength']">
-                                        Name must be at least 2 characters long
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label>Card Number</label>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <input formControlName="cardNumber" type="text">
-                                <div *ngIf="cardNumber?.invalid && (cardNumber?.dirty || cardNumber?.touched)"
-                                    class="alert alert-danger mt-1">
-                                    <div *ngIf="cardNumber.errors['required'] ">
-                                        Card number is required
-                                    </div>
-                                    <div *ngIf="cardNumber.errors['pattern'] ">
-                                        Card number must be 16 digits long
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label>Security Code</label>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <input formControlName="securityCode" type="text">
-                                <div *ngIf="cardSecurityCode?.invalid && (cardSecurityCode?.dirty || cardSecurityCode?.touched)"
-                                    class="alert alert-danger mt-1">
-                                    <div *ngIf="cardSecurityCode.errors['required'] || cardSecurityCode.errors['whitespaceValidator']">
-                                        Security code is required
-                                    </div>
-                                    <div *ngIf="cardSecurityCode.errors['pattern']">
-                                        Security code must be 3 digits long
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label>Expiration Month</label>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <select formControlName="expirationMonth">
-                                    <option *ngFor="let month of creditCardMonths">
-                                        {{ month }}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label>Expiration Year</label>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <select formControlName="expirationYear" (change)="handleMonthsAndYears()">
-                                    <option *ngFor="let year of creditCardYears">
-                                        {{ year }}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
+                    
+                    <div id="card-errors" class="displayError.textContent!=='': 'alert alert-danger mt-1"></div>
                 </div>
 
                 <!--Order details-->
@@ -436,7 +329,7 @@
                 </div>
 
                 <div class="text-center">
-                    <button type="submit" class="btn btn-info">Purchase</button>
+                    <button type="submit" class="btn btn-info" [disabled]="isDisabled">Purchase</button>
                 </div>
             </form>
         </div>
