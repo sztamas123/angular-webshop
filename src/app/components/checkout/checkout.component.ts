@@ -157,11 +157,11 @@ export class CheckoutComponent implements OnInit {
             }, { handleActions: false })
           .then(function(result) {
             if (result.error) {
-              // inform the customer there was an error
+              // Print error
               alert(`There was an error: ${result.error.message}`);
               this.isDisabled = false;
             } else {
-              // call REST API via the CheckoutService
+              // Create order(call backend endpoint)
               this.checkoutService.createOrder(purchase).subscribe({
                 next: response => {
                   alert(`Your order has been received.\nOrder tracking number: ${response.orderTrackingNumber}`);
@@ -186,7 +186,6 @@ export class CheckoutComponent implements OnInit {
 
   }
 
-  //not working properly
   copyShippingToBilling(event) {
     if (event.target.checked) {
       this.checkoutFormGroup.controls['billingAddress']
