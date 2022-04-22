@@ -18,6 +18,13 @@ spec:  # What state you desire for the object
           imagePullPolicy: Never
           ports:
             - containerPort: 80
+          env:
+            - name: OKTA_CLIENT_ID
+              value: 0oa4jtgy5aQDwC9hg5d7
+            - name: OKTA_ISSUER
+              value: https://dev-57359016.okta.com/oauth2/default
+            - name: REDIRECT_URI
+              value: https://192.168.49.2:30170/login/callback
 ---
     apiVersion: v1
     kind: Service
